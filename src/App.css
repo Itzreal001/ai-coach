@@ -1470,21 +1470,67 @@ input:disabled, textarea:disabled {
 .test-sound-btn {
   width: 100%;
   padding: 10px;
-  background: rgba(59, 130, 246, 0.2);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
+  border: 1px solid rgba(59, 130, 246, 0.4);
   border-radius: 8px;
   color: var(--text-primary);
   font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.test-sound-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.test-sound-btn:hover::before {
+  left: 100%;
 }
 
 .test-sound-btn:hover {
-  background: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.3));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.test-sound-btn:active {
+  transform: translateY(0);
+}
+
+.volume-panel-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.volume-panel-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
 /* Mobile audio controls */
@@ -1493,11 +1539,65 @@ input:disabled, textarea:disabled {
     top: 15px;
     right: 15px;
     flex-direction: column;
+    gap: 8px;
   }
-  
+
+  .audio-toggle,
+  .audio-settings-btn {
+    padding: 14px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
   .volume-controls-panel {
-    right: -80px;
-    min-width: 180px;
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    margin-top: 0;
+    min-width: auto;
+    max-width: none;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .volume-control {
+    margin-bottom: 12px;
+  }
+
+  .volume-control label {
+    min-width: 80px;
+    font-size: 0.85rem;
+  }
+
+  .volume-control input[type="range"] {
+    height: 6px;
+  }
+
+  .volume-control input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
+
+  .volume-control span {
+    min-width: 35px;
+    font-size: 0.75rem;
+  }
+
+  .test-sound-btn {
+    padding: 14px;
+    font-size: 0.9rem;
+    min-height: 48px;
+    margin-top: 12px;
+    font-weight: 600;
+  }
+
+  .volume-panel-close {
+    width: 36px;
+    height: 36px;
+    top: 16px;
+    right: 16px;
   }
 }
 

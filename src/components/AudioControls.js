@@ -47,7 +47,38 @@ const AudioControls = ({ isMuted, onToggleMute, onVolumeChange }) => { // ADDED 
 
   const playTestSound = () => {
     advancedAudioManager.playSound('achievement');
+    // Add visual feedback
+    const btn = document.querySelector('.test-sound-btn');
+    if (btn) {
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        btn.style.transform = 'scale(1)';
+      }, 150);
+    }
   };
+
+  // Close volume controls when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showVolumeControls && window.innerWidth <= 768) {
+        const panel = document.querySelector('.volume-controls-panel');
+        const settingsBtn = document.querySelector('.audio-settings-btn');
+        if (panel && settingsBtn && !panel.contains(event.target) && !settingsBtn.contains(event.target)) {
+          setShowVolumeControls(false);
+        }
+      }
+    };
+
+    if (showVolumeControls) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showVolumeControls]);
 
   return (
     <div className="audio-controls-container">
@@ -73,10 +104,19 @@ const AudioControls = ({ isMuted, onToggleMute, onVolumeChange }) => { // ADDED 
         {showVolumeControls && (
           <motion.div
             className="volume-controls-panel"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            onClick={(e) => e.stopPropagation()}
           >
+            <button
+              className="volume-panel-close"
+              onClick={() => setShowVolumeControls(false)}
+              aria-label="Close volume controls"
+            >
+              <Icon name="close" size={16} />
+            </button>
+
             <div className="volume-control">
               <label>
                 <Icon name="music" size={16} />
