@@ -1540,6 +1540,7 @@ input:disabled, textarea:disabled {
     right: 15px;
     flex-direction: column;
     gap: 8px;
+    z-index: 1001;
   }
 
   .audio-toggle,
@@ -1550,16 +1551,16 @@ input:disabled, textarea:disabled {
   }
 
   .volume-controls-panel {
-    position: fixed;
-    top: auto;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    margin-top: 0;
-    min-width: auto;
-    max-width: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    min-width: 200px;
     padding: 16px;
     border-radius: 12px;
+    z-index: 1002;
+    max-height: 50vh;
+    overflow-y: auto;
   }
 
   .volume-control {
