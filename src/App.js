@@ -26,6 +26,7 @@ import { gamificationSystem } from './utils/gamification';
 import { socialManager } from './utils/socialManager';
 import { progressTracker } from './utils/progressTracker';
 
+//functions
 function App() {
   const [userData, setUserData] = useState(null);
   const [futureData, setFutureData] = useState(null);
