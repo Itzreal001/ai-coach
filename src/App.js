@@ -37,7 +37,7 @@ function App() {
   const [userProgress, setUserProgress] = useState({});
   const [achievements, setAchievements] = useState([]);
   const [isViewLoading, setIsViewLoading] = useState(false);
-  const [showContentLoaded, setShowContentLoaded] = useState(false);
+
   const [showAddMilestone, setShowAddMilestone] = useState(false);
   const [newMilestone, setNewMilestone] = useState({ title: '', description: '', targetDate: '' });
 
@@ -268,7 +268,6 @@ function App() {
     if (newView === activeView) return; // Don't change if already active
 
     setIsViewLoading(true);
-    setShowContentLoaded(false);
     audioManager.playSound('transition');
 
     // Simulate loading time for better UX
@@ -276,10 +275,6 @@ function App() {
 
     setActiveView(newView);
     setIsViewLoading(false);
-
-    // Show success indicator
-    setShowContentLoaded(true);
-    setTimeout(() => setShowContentLoaded(false), 2000);
   };
 
   const shareToSocial = async (platform) => {
@@ -495,12 +490,7 @@ function App() {
                   <p>Loading content...</p>
                 </div>
               ) : (
-                <>
-                  {renderMainContent()}
-                  <div className={`content-loaded-indicator ${showContentLoaded ? 'show' : ''}`}>
-                    Content loaded successfully
-                  </div>
-                </>
+                {renderMainContent()}
               )}
             </div>
 
