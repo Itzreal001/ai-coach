@@ -6,7 +6,7 @@ import { aiCoach } from '../utils/aiCoach';
 const AICoachPanel = ({ userData, futureData, progressData, dreamAnalysis }) => {
   const [coachingData, setCoachingData] = useState(null);
   const [activeSection, setActiveSection] = useState('motivation');
-  const [isTyping, setIsTyping] = useState(false);
+
 
   const loadCoachingData = useCallback(async () => {
     try {
@@ -69,12 +69,7 @@ const AICoachPanel = ({ userData, futureData, progressData, dreamAnalysis }) => 
     );
   }
 
-  const simulateTyping = async (callback) => {
-    setIsTyping(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    callback();
-    setIsTyping(false);
-  };
+
 
   return (
     <div className="ai-coach-panel">
@@ -124,7 +119,7 @@ const AICoachPanel = ({ userData, futureData, progressData, dreamAnalysis }) => 
           <button
             key={tab.id}
             className={`coach-tab ${activeSection === tab.id ? 'active' : ''}`}
-            onClick={() => simulateTyping(() => setActiveSection(tab.id))}
+            onClick={() => setActiveSection(tab.id)}
           >
             <Icon name={tab.icon} size={16} />
             {tab.label}
@@ -132,36 +127,18 @@ const AICoachPanel = ({ userData, futureData, progressData, dreamAnalysis }) => 
         ))}
       </motion.div>
 
-      {/* Loading State */}
-      <AnimatePresence>
-        {isTyping && (
-          <motion.div
-            className="coach-typing"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="typing-indicator">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <p>Your coach is thinking...</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
 
       {/* Content Sections */}
       <AnimatePresence mode="wait">
-        {!isTyping && (
-          <motion.div
-            key={activeSection}
-            className="coach-content"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
+        <motion.div
+          key={activeSection}
+          className="coach-content"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
             {/* Motivation Section */}
             {activeSection === 'motivation' && (
               <div className="motivation-section">
@@ -380,7 +357,6 @@ const AICoachPanel = ({ userData, futureData, progressData, dreamAnalysis }) => 
               </div>
             )}
           </motion.div>
-        )}
       </AnimatePresence>
     </div>
   );
