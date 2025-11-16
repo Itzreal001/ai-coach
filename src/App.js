@@ -491,7 +491,7 @@ function App() {
                   <p>Loading content...</p>
                 </div>
               ) : (
-                {renderMainContent()}
+                renderMainContent()
               )}
             </div>
 
